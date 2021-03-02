@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  {{content-for "head-tag"}}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Discourse - Ember CLI</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {{content-for "before-script-load"}}
+
+    <script src="{{rootURL}}assets/vendor.js"></script>
+    <script src="{{rootURL}}assets/discourse.js"></script>
+    <script src="{{rootURL}}assets/admin.js"></script>
 
     {{content-for "head"}}
   </head>
@@ -15,20 +21,12 @@
     <section id='main'>
     </section>
 
-    <script src="{{rootURL}}assets/vendor.js"></script>
-    <script src="{{rootURL}}assets/discourse.js"></script>
-    <script src="{{rootURL}}assets/admin.js"></script>
-    <script src="{{rootURL}}assets/scripts/discourse-boot.js"></script>
+    <div id='offscreen-content'>
+    </div>
 
-    <script>
-      document.addEventListener("discourse-booted", (e) => {
-        const config = e.detail;
-        const app = require(`${config.modulePrefix}/app`)["default"].create(
-          config
-        );
-        app.start();
-      });
-    </script>
+    {{content-for "preloaded"}}
+
+    <script src="{{rootURL}}assets/scripts/discourse-boot.js"></script>
 
     {{content-for "body-footer"}}
   </body>
